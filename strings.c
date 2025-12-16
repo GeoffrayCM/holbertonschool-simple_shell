@@ -1,3 +1,4 @@
+#include "shell.h"
 int _putchar(char c)
 {
 	return (write(1, &c, 1));
@@ -54,20 +55,17 @@ char *_strcat(char *dest, char *src)
  * Return: allocated string
  */
 
-char *_strdup(char *str)
+char *_strndup(char *str, int n)
 {
 	int i = 0;
 	char *dest;
 
 	if (str == 0)
 		return (0);
-	while (str[i])
-		i++;
-	dest = malloc(sizeof(char) * i + 1);
+	dest = malloc(n + 1);
 	if (!dest)
 		return (0);
-	i = 0;
-	while (str[i])
+	while (str[i] && i < n)
 	{
 		dest[i] = str[i];
 		i++;
@@ -92,5 +90,3 @@ int _strcmp(char *s1, char *s2)
 	}
 	return (*s1 - *s2);
 }
-
-
