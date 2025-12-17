@@ -1,12 +1,5 @@
 #include "shell.h"
 
-void _puts(char *str)
-{
-	int i = 0;
-
-	while(str[i])
-		putchar(str[i++]);
-}
 void ctrlC(int signal __attribute__((unused)))
 {
 	write(STDOUT_FILENO, "\n$ ", 3);
@@ -14,6 +7,7 @@ void ctrlC(int signal __attribute__((unused)))
 int main(void)
 {
 	char *buffer = NULL;
+	char **cmd = NULL;
 	size_t b_size = 0;
 	ssize_t r; /* peut etre negatif si EOF error*/
 	int user = isatty(STDIN_FILENO); /* si 0 pas de terminal */
@@ -26,6 +20,20 @@ int main(void)
 	while ((r = getline(&buffer, &b_size, stdin)) != -1) /* & car getline doit pouvoir modifier le buffer */ 
 	{
 		(void)r; /* pour l'instant pas d'usage */
+		cmd = strtow(buffer);
+		if (!cmd)
+			continue;
+		/* test strtow */ 
+		int i = 0;
+		while (cmd[i])
+		{
+			_puts(cmd[i]);
+			_putchar('\n');
+			i++;
+		}
+		/* test strtow */
+		free_cmd(cmd);
+
 		if (user)
 			_puts("$ ");
 	}
