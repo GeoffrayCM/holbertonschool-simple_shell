@@ -10,6 +10,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+extern char **environ;
 int _putchar(char c);
 void _puts(char *str);
 int _strcmp(char *s1, char *s2);
@@ -18,4 +19,5 @@ int _strlen(char *str);
 char *_strcat(char *dest, char *src);
 char **strtow(char *str);
 void free_cmd(char **str);
+int _strncmp(char *s1, char *s2, unsigned int n);
 #endif
