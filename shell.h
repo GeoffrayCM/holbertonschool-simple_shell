@@ -22,4 +22,8 @@ void free_cmd(char **str);
 int _strncmp(char *s1, char *s2, unsigned int n);
 char *_getenv(char *name);
 char *_strdup(char *str);
+int get_path(char **cmd);
+void execve_cmd(char **cmd);
+void *_calloc(unsigned int nmemb, unsigned int size);
+char *_memset(char *s, char b, unsigned int n);
 #endif

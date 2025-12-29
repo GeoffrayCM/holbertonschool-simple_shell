@@ -13,7 +13,7 @@ int main(void)
 	int user = isatty(STDIN_FILENO); /* si 0 pas de terminal */
 	/* terminal ? */
 	if (user)
-		_puts("$ ");
+		_puts("% ");
 	/* getline lis le stdin */
 	signal(SIGINT, ctrlC); /* handler pour CC */ 
 
@@ -22,11 +22,18 @@ int main(void)
 		(void)r; /* pour l'instant pas d'usage */
 		cmd = strtow(buffer);
 		if (!cmd)
+		{
+			if (user)
+				_puts("% ");
 			continue;
-
+		}
+		if (get_path(cmd) == 1)
+			execve_cmd(cmd);
+		else
+			perror(cmd[0]);
 		free_cmd(cmd);
 		if (user)
-			_puts("$ ");
+			_puts("% ");
 	}
 	if (user)
 		putchar('\n');

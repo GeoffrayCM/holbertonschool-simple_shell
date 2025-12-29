@@ -1,6 +1,12 @@
 #include "shell.h"
 
-char *_getenv(charname)
+/**
+ * _getenv - find path in env
+ * @name: PATH
+ * Description: getenv run through the env array and finds the path line
+ * Return: Path line
+ */
+char *_getenv(char *name)
 {
 	int i = 0;
 	int nlen;
