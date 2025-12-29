@@ -50,7 +50,7 @@ char *_strdup(char *str)
 
         if (str == 0)
                 return (0);
-        dest = malloc(n + 1);
+        dest = malloc(sizeof(char) * _strlen(str) + 1);
         if (!dest)
                 return (0);
         while (str[i])
@@ -61,3 +61,4 @@ char *_strdup(char *str)
         dest[i] = '\0';
         return (dest);
 }
+
