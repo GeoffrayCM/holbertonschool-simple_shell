@@ -11,7 +11,7 @@ int main(void)
 	size_t b_size = 0;
 	ssize_t r; /* peut etre negatif si EOF error*/
 	int user = isatty(STDIN_FILENO); /* si 0 pas de terminal */
-	/* si utilisateur clavier puts du prompt */
+	/* terminal ? */
 	if (user)
 		_puts("$ ");
 	/* getline lis le stdin */
@@ -23,17 +23,8 @@ int main(void)
 		cmd = strtow(buffer);
 		if (!cmd)
 			continue;
-		/* test strtow */ 
-		int i = 0;
-		while (cmd[i])
-		{
-			_puts(cmd[i]);
-			_putchar('\n');
-			i++;
-		}
-		/* test strtow */
-		free_cmd(cmd);
 
+		free_cmd(cmd);
 		if (user)
 			_puts("$ ");
 	}

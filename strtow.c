@@ -13,12 +13,12 @@ int _cw(char *str)
 
 	while (str[i])
 	{
-		while (str[i] == ' ')
+		while (str[i] == ' ' || str[i] == ':')
 			i++;
 		if (!str[i])
 			break;
 		s++;
-		while (str[i] && str[i] != ' ')
+		while (str[i] && str[i] != ' ' && str[i] != ':')
 			i++;
 	}
 	return (s);
@@ -33,7 +33,7 @@ int _cw(char *str)
 
 int _chsp(char *str, int n)
 {
-	if (str[n] == ' ')
+	if (str[n] == ' ' || str[n] == ':')
 		return (0);
 	return (1);
 }
