@@ -20,4 +20,6 @@ char *_strcat(char *dest, char *src);
 char **strtow(char *str);
 void free_cmd(char **str);
 int _strncmp(char *s1, char *s2, unsigned int n);
+char *_getenv(char *name);
+char *_strdup(char *str);
 #endif

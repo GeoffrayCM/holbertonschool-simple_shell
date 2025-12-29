@@ -50,8 +50,9 @@ char *_strcat(char *dest, char *src)
 }
 
 /**
- * _strdup - duplicate string
+ * _strndup - duplicate string
  * @str: string
+ * @n: n
  * Return: allocated string
  */
 
