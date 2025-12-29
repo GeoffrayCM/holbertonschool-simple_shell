@@ -37,4 +37,27 @@ int _strncmp(char *s1, char *s2, unsigned int n)
 	return (s1[i] - s2[i]);
 }
 
+/**
+ * _strdup - duplicate string
+ * @str: string
+ * Return: allocated string
+ */
 
+char *_strdup(char *str)
+{
+        int i = 0;
+        char *dest;
+
+        if (str == 0)
+                return (0);
+        dest = malloc(n + 1);
+        if (!dest)
+                return (0);
+        while (str[i])
+        {
+                dest[i] = str[i];
+                i++;
+        }
+        dest[i] = '\0';
+        return (dest);
+}
