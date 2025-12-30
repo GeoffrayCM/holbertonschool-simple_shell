@@ -1,9 +1,24 @@
 #include "shell.h"
 
+/**
+ * ctrlC - function called by signal
+ * @signal: unused
+ * Description: ctrlC cancel the current line and produce new prompt
+ * Return: void
+ */
 void ctrlC(int signal __attribute__((unused)))
 {
 	write(STDOUT_FILENO, "\n$ ", 3);
 }
+
+/**
+ * main - Entry
+ * Description: main function that run getline to read from the terminal
+ * split the command from input
+ * compare the input to built-ins commands
+ * send the command to getpath to form a valid path
+ * Return: 0
+ */
 int main(void)
 {
 	char *buffer = NULL;
@@ -15,9 +30,10 @@ int main(void)
 	if (user)
 		_puts("% ");
 	/* getline lis le stdin */
-	signal(SIGINT, ctrlC); /* handler pour CC */ 
+	signal(SIGINT, ctrlC); /* handler pour CC */
 
-	while ((r = getline(&buffer, &b_size, stdin)) != -1) /* & car getline doit pouvoir modifier le buffer */ 
+	/* & car getline doit pouvoir modifier le buffer */
+	while ((r = getline(&buffer, &b_size, stdin)) != -1)
 	{
 		(void)r; /* pour l'instant pas d'usage */
 		cmd = strtow(buffer);
