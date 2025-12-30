@@ -1,28 +1,44 @@
 #include "shell.h"
+
+/**
+ * _putchar - print char
+ * @c: char to print
+ * Return: 1
+ */
 int _putchar(char c)
 {
 	return (write(1, &c, 1));
 }
 
+/**
+ * _puts - print string
+ * @str: string to print
+ * Return: void
+ */
 void _puts(char *str)
 {
 
 	int i = 0;
 
-	while(str[i])
+	while (str[i])
 	{
 	_putchar(str[i]);
 	i++;
 	}
 }
 
+/**
+ * _strlen - finds lenght of string
+ * @str: string
+ * Return: lenght
+ */
 int _strlen(char *str)
 {
 	int i = 0;
 
-	while(str[i])
+	while (str[i])
 		i++;
-	return(i);
+	return (i);
 }
 
 /**
