@@ -59,7 +59,6 @@ int main(int ac, char **av)
 	while (getline(&buffer, &b_size, stdin) != -1)
 	{
 		line++;
-		(void)r; /* pour l'instant pas d'usage */
 		cmd = strtow(buffer);
 		if (!cmd)
 		{
