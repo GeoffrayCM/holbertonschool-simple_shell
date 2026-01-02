@@ -8,7 +8,7 @@
  */
 void ctrlC(int signal __attribute__((unused)))
 {
-	write(STDOUT_FILENO, "\n$ ", 3);
+	write(STDOUT_FILENO, "\n% ", 3);
 }
 
 /**
@@ -43,7 +43,12 @@ int main(void)
 				_puts("% ");
 			continue;
 		}
-		if (get_path(cmd) == 1)
+		if (env_builtin(cmd) || exit_builtin(cmd))
+		{
+			free_cmd(cmd);
+			continue;
+		}
+		else if (get_path(cmd) == 1)
 			execve_cmd(cmd);
 		else
 			perror(cmd[0]);

@@ -26,4 +26,11 @@ int get_path(char **cmd);
 void execve_cmd(char **cmd);
 void *_calloc(unsigned int nmemb, unsigned int size);
 char *_memset(char *s, char b, unsigned int n);
+
+/* builtin */
+int env_builtin(char **cmd);
+int exit_builtin(char **cmd);
+int _isdigit(int d);
+int _isnumber(char *str);
+int _atoi(char *s);
 #endif
