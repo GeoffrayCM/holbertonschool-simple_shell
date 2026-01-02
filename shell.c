@@ -29,7 +29,7 @@ void print_not_found(char *prog, unsigned int line, char *cmd)
  */
 void ctrlC(int signal)
 {
-	void(signal);
+	(void)signal;
 	write(STDOUT_FILENO, "\n$ ", 3);
 }
 
@@ -45,13 +45,13 @@ void ctrlC(int signal)
  */
 int main(int ac, char **av)
 {
-	(void)ac;
 	char *buffer = NULL;
 	char **cmd = NULL;
 	size_t b_size = 0;
 	int user = isatty(STDIN_FILENO); /* si 0 pas de terminal */
 	unsigned int line = 0;
 
+	(void)ac;
 	if (user)
 		_puts("$ ");
 	signal(SIGINT, ctrlC); /* handler pour CC */
@@ -72,8 +72,7 @@ int main(int ac, char **av)
 				_puts("$ ");
 			continue;
 		}
-		/*else if (get_path(cmd) == 1)*/
-		if (cmd[0][0] == '/' || (cmd[0][0] == '.' && cmd[0][1] == '/'))
+		else if (get_path(cmd) == 1)
 			execve_cmd(cmd);
 		else
 			print_not_found(av[0], line, cmd[0]);
