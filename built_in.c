@@ -26,7 +26,7 @@ int env_builtin(char **cmd)
 				j++;
 			}
 			if (environ[i + 1] != NULL)
-			_putchar('\n');
+				_putchar('\n');
 			i++;
 		}
 		return (1);
