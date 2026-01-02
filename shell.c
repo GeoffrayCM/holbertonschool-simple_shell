@@ -27,15 +27,14 @@ int main(int ac, char **av)
 	char *buffer = NULL;
 	char **cmd = NULL;
 	size_t b_size = 0;
-	int user = isatty(STDIN_FILENO); /* si 0 pas de terminal */
+	int user = isatty(STDIN_FILENO), path_value;/* si 0 pas de terminal */
 	unsigned int line = 0;
 
 	if (user)
 		_puts("$ ");
 	(void)ac, signal(SIGINT, ctrlC); /* handler pour CC */
-	while (getline(&buffer, &b_size, stdin) != -1)
+	while (getline(&buffer, &b_size, stdin) != -1 && ++line)
 	{
-		line++;
 		cmd = strtow(buffer);
 		if (!cmd)
 		{
@@ -50,9 +49,10 @@ int main(int ac, char **av)
 				_puts("$ ");
 			continue;
 		}
-		if (get_path(cmd) == 1)
+		path_value = get_path(cmd);
+		if (path_value == 1)
 			execve_cmd(cmd, av[0], line);
-		else if (get_path(cmd) == -1)
+		else if (path_value == -1)
 			print_perm_denied(av[0], line, cmd[0]);
 		else
 			print_not_found(av[0], line, cmd[0]);
