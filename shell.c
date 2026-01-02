@@ -8,7 +8,7 @@
  */
 void ctrlC(int signal __attribute__((unused)))
 {
-	write(STDOUT_FILENO, "\n% ", 3);
+	write(STDOUT_FILENO, "\n$ ", 3);
 }
 
 /**
@@ -28,7 +28,7 @@ int main(void)
 	int user = isatty(STDIN_FILENO); /* si 0 pas de terminal */
 	/* terminal ? */
 	if (user)
-		_puts("% ");
+		_puts("$ ");
 	/* getline lis le stdin */
 	signal(SIGINT, ctrlC); /* handler pour CC */
 
@@ -40,7 +40,7 @@ int main(void)
 		if (!cmd)
 		{
 			if (user)
-				_puts("% ");
+				_puts("$ ");
 			continue;
 		}
 		if (env_builtin(cmd) || exit_builtin(cmd))
@@ -54,7 +54,7 @@ int main(void)
 			perror(cmd[0]);
 		free_cmd(cmd);
 		if (user)
-			_puts("% ");
+			_puts("$ ");
 	}
 	if (user)
 		putchar('\n');
