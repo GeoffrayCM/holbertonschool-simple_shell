@@ -26,7 +26,7 @@ int get_path(char **cmd);
 void execve_cmd(char **cmd);
 void *_calloc(unsigned int nmemb, unsigned int size);
 char *_memset(char *s, char b, unsigned int n);
-
+void print_not_found(char *prog, unsigned int line, char *cmd);
 /* builtin */
 int env_builtin(char **cmd);
 int exit_builtin(char **cmd);
