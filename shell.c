@@ -1,27 +1,6 @@
 #include "shell.h"
 
 /**
- * print_not_found - print error with same output as sh
- * @prog: program name av[0]
- * @line: line number
- * @cmd: input
- * Return: void
- */
-void print_not_found(char *prog, unsigned int line, char *cmd)
-{
-	char buf[32];
-	int len;
-
-	write(STDERR_FILENO, prog, _strlen(prog));
-	write(STDERR_FILENO, ": ", 2);
-	len = sprintf(buf, "%u", line);
-	write(STDERR_FILENO, buf, len);
-	write(STDERR_FILENO, ": ", 2);
-	write(STDERR_FILENO, cmd, _strlen(cmd));
-	write(STDERR_FILENO, ": not found\n", 12);
-}
-
-/**
  * ctrlC - function called by signal
  * @signal: unused
  * Description: ctrlC cancel the current line and produce new prompt
@@ -73,7 +52,7 @@ int main(int ac, char **av)
 			continue;
 		}
 		else if (get_path(cmd) == 1)
-			execve_cmd(cmd);
+			execve_cmd(cmd, av[0], line);
 		else
 			print_not_found(av[0], line, cmd[0]);
 		free_cmd(cmd);
