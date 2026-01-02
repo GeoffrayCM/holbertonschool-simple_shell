@@ -15,14 +15,12 @@ gcc -Wall -Wextra -Werror -pedantic -std=gnu89 *.c -o hsh
 
 ## Usage
 
-c
 ./hsh
 $ ls
 $ /bin/ls
 $ ls -l /tmp
 $ exit
 
-text
 - The prompt is displayed only if stdin is a terminal (isatty).
 - Ctrl+D (EOF) exits the shell.
 - Ctrl+C prints a new prompt without exiting.
