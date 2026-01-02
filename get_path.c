@@ -1,6 +1,20 @@
 #include "shell.h"
 
 /**
+ * direct_path - helper to shorten get_path
+ * @cmd: input
+ * Return: 0 if not found, -1 if found but no x, 1 if f and x
+ */
+int direct_path(char **cmd)
+{
+	if (access(cmd[0], F_OK) != 0)
+		return (0);
+	if (access(cmd[0], X_OK) != 0)
+		return (-1);
+	return (1);
+}
+
+/**
  * get_path - replace cmd[0] with full path
  * @cmd: array from strtow (cmd[0] is the command name)
  * Description: Firstly retrieve env with getenv
@@ -17,9 +31,8 @@ int get_path(char **cmd)
 
 	if (!cmd || !cmd[0] || cmd[0][0] == '\0')
 		return (0);
-	/* (/bin/ls or ./a.out), don't search PATH */
 	if (cmd[0][0] == '/' || (cmd[0][0] == '.' && cmd[0][1] == '/'))
-		return (access(cmd[0], X_OK) == 0);
+		return (direct_path(cmd));
 	env = _getenv("PATH");	/* ("PATH=...") */
 	if (!env)
 		return (0);
@@ -32,7 +45,6 @@ int get_path(char **cmd)
 		return (0);
 	while (dirs[i])		/* try each directory with access() */
 	{
-		/* allocate room for dir (/bin) + "/" + cmd[0] + '\0' */
 		full = _calloc(sizeof(char), _strlen(dirs[i]) + 1 + _strlen(cmd[0]) + 1);
 		if (!full)
 			break;
