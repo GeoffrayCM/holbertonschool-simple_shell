@@ -72,7 +72,8 @@ int main(int ac, char **av)
 				_puts("$ ");
 			continue;
 		}
-		else if (get_path(cmd) == 1)
+		/*else if (get_path(cmd) == 1)*/
+		if (cmd[0][0] == '/' || (cmd[0][0] == '.' && cmd[0][1] == '/'))
 			execve_cmd(cmd);
 		else
 			print_not_found(av[0], line, cmd[0]);
