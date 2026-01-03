@@ -29,10 +29,11 @@ char *_memset(char *s, char b, unsigned int n);
 void print_not_found(char *prog, unsigned int line, char *cmd);
 void print_perm_denied(char *prog, unsigned int line, char *cmd);
 void print_is_dir(char *prog, unsigned int line, char *cmd);
+void print_exit_illegal(char *prog, unsigned int line, char *arg);
 int direct_path(char **cmd);
 /* builtin */
 int env_builtin(char **cmd);
-int exit_builtin(char **cmd);
+int exit_builtin(char **cmd, char *prog, unsigned int line);
 int _isdigit(int d);
 int _isnumber(char *str);
 int _atoi(char *s);

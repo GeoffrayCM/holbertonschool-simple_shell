@@ -1,10 +1,23 @@
-d=/tmp/ss_$RANDOM
-mkdir -p "$d"
-cat > "$d/ok" <<'EOF'
-#!/bin/sh
-echo OK
+cat << 'EOF' | ./hsh
+exit
 EOF
-chmod 755 "$d/ok"
-PATH="$d:$PATH" printf "ok\n" | ./hsh 2>&1 | cat -e
-rm -rf "$d"
+echo "status=$?"
+cat << 'EOF' | ./hsh
+exit 98
+EOF
+echo "status=$?"
+cat << 'EOF' | ./hsh
+exit 300
+EOF
+echo "status=$?"
+cat << 'EOF' | ./hsh 2>err
+exit -1
+EOF
+echo "status=$?"
+cat -e err
+cat << 'EOF' | ./hsh 2>err
+exit abc
+EOF
+echo "status=$?"
+cat -e err
 

@@ -23,7 +23,7 @@ static int handle_cmd(char **cmd, char **av, unsigned int line)
 {
 	int path_value;
 
-	if (env_builtin(cmd) || exit_builtin(cmd))
+	if (env_builtin(cmd) || exit_builtin(cmd, av[0], line))
 		return (0);
 
 	path_value = get_path(cmd);

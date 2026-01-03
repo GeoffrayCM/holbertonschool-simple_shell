@@ -61,3 +61,24 @@ void print_is_dir(char *prog, unsigned int line, char *cmd)
 	write(STDERR_FILENO, cmd, _strlen(cmd));
 	write(STDERR_FILENO, ": is a directory\n", 17);
 }
+
+/**
+ * print_exit_illegal - print error with same output as sh
+ * @prog: program name av[0]
+ * @line: line number
+ * @arg: input
+ * Return: void
+ */
+void print_exit_illegal(char *prog, unsigned int line, char *arg)
+{
+	char buf[32];
+	int len;
+
+	write(STDERR_FILENO, prog, _strlen(prog));
+	write(STDERR_FILENO, ": ", 2);
+	len = sprintf(buf, "%u", line);
+	write(STDERR_FILENO, buf, len);
+	write(STDERR_FILENO, ": exit: Illegal number: ", 24);
+	write(STDERR_FILENO, arg, _strlen(arg));
+	write(STDERR_FILENO, "\n", 1);
+}

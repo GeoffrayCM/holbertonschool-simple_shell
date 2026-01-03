@@ -37,15 +37,17 @@ int env_builtin(char **cmd)
 /**
  * exit_builtin - handle the exit built in with status
  * @cmd: input
+ * @prog: av[0]
+ * @line: line
  * Description: check for the first 2 arguments
  * if only 1 argument that is "exit" just exit
  * if "exit" followed by a number argument exit
  * with status % 256 to match unix 8 bits return
  * Return: 0 if not valid exit or else just exit
  */
-int exit_builtin(char **cmd)
+int exit_builtin(char **cmd, char *prog, unsigned int line)
 {
-/*	int status;*/
+	int status;
 
 	if (!cmd || !cmd[0])
 		return (0);
@@ -56,17 +58,15 @@ int exit_builtin(char **cmd)
 		free_cmd(cmd);
 		exit(0);
 	}
-	/* cas d'erreurs: argument non-nombre/nombre negatif exit2 */
-/*	if (!_isnumber(cmd[1]) || cmd[1][0] == '-') */
-/*	{ */
-	/*	write(STDERR_FILENO, "exit: invalid status: ", 22);*/
-	/*	write(STDERR_FILENO, cmd[1], _strlen(cmd[1]));*/
-	/*	write(STDERR_FILENO, "\n", 1);*/
-	/*	free_cmd(cmd);*/
-	/*	exit(2);*/
-/*	}*/
-/*	status = _atoi(cmd[1]) % 256; 8bits unix like */
+	/*cas d'erreurs: argument non-nombre/nombre negatif exit2 */
+	if (!_isnumber(cmd[1]) || cmd[1][0] == '-')
+	{
+		print_exit_illegal(prog, line, cmd[1]);
+		free_cmd(cmd);
+		exit(2);
+	}
+	status = _atoi(cmd[1]) % 256; /*8bits unix like*/
 	free_cmd(cmd);
-/*	exit(status); */
+	exit(status);
 	return (0);
 }
