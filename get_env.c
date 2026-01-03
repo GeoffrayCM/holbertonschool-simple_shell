@@ -23,8 +23,8 @@ char *_getenv(char *name)
 		i++;
 	}
 
-	/*if (_strcmp(name, "PATH") == 0) */
-	/*	return ("PATH=/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin"); */
+	if (_strcmp(name, "PATH") == 0)
+		return ("PATH=/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin");
 
 	return (NULL);
 }

@@ -18,7 +18,6 @@ char *_strndup(char *str, int n);
 int _strlen(char *str);
 char *_strcat(char *dest, char *src);
 char **strtow(char *str);
-char **strtowp(char *str);
 void free_cmd(char **str);
 int _strncmp(char *s1, char *s2, unsigned int n);
 char *_getenv(char *name);
