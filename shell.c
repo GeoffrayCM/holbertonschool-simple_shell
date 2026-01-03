@@ -13,6 +13,32 @@ void ctrlC(int signal)
 }
 
 /**
+ * handle_cmd - handle one parsed command (builtins + path + exec/errors)
+ * @cmd: command array
+ * @av: argv from main
+ * @line: current line number
+ * Return: exit status
+ */
+static int handle_cmd(char **cmd, char **av, unsigned int line)
+{
+	int path_value;
+
+	if (env_builtin(cmd) || exit_builtin(cmd))
+		return (0);
+
+	path_value = get_path(cmd);
+	if (path_value == 1)
+		return (execve_cmd(cmd, av[0], line));
+	if (path_value == -2)
+		return (print_is_dir(av[0], line, cmd[0]), 126);
+	if (path_value == -1)
+		return (print_perm_denied(av[0], line, cmd[0]), 126);
+
+	print_not_found(av[0], line, cmd[0]);
+	return (127);
+}
+
+/**
  * main - Entry
  * @ac: ac
  * @av: av
@@ -27,53 +53,28 @@ int main(int ac, char **av)
 	char *buffer = NULL;
 	char **cmd = NULL;
 	size_t b_size = 0;
-	int user = isatty(STDIN_FILENO), path_value;/* si 0 pas de terminal */
+	int user = isatty(STDIN_FILENO);
 	unsigned int line = 0;
-	int status = 0; /* exit status en cas d'erreurs */
+	int status = 0;
 
+	(void)ac;
+	signal(SIGINT, ctrlC);
 	if (user)
 		_puts("$ ");
-	(void)ac, signal(SIGINT, ctrlC); /* handler pour CC */
 	while (getline(&buffer, &b_size, stdin) != -1 && ++line)
 	{
 		cmd = strtow(buffer);
-		if (!cmd)
+		if (cmd)
 		{
-			if (user)
-				_puts("$ ");
-			continue;
-		}
-		if (env_builtin(cmd) || exit_builtin(cmd))
-		{
+			status = handle_cmd(cmd, av, line);
 			free_cmd(cmd);
-			if (user)
-				_puts("$ ");
-			continue;
 		}
-		path_value = get_path(cmd);
-		if (path_value == 1)
-			status = execve_cmd(cmd, av[0], line);
-		else if (path_value == -2)
-		{
-			print_is_dir(av[0], line, cmd[0]);
-			status = 126;
-		}
-		else if (path_value == -1)
-		{
-			print_perm_denied(av[0], line, cmd[0]);
-			status = 126;
-		}
-		else
-		{
-			print_not_found(av[0], line, cmd[0]);
-			status = 127;
-		}
-		free_cmd(cmd);
 		if (user)
 			_puts("$ ");
 	}
 	if (user)
 		putchar('\n');
-	free(buffer); /*getline malloc auto */
+	free(buffer);
 	return (status);
 }
+

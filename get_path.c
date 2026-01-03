@@ -1,6 +1,23 @@
 #include "shell.h"
 
 /**
+ * found_in_path - handle found full path result
+ * @cmd: command array
+ * @full: malloc'ed full path (dir/cmd)
+ * @dirs: splitted PATH (to free before returning)
+ * Return: 1 if executable, -1 if found but not executable
+ */
+static int found_in_path(char **cmd, char *full, char **dirs)
+{
+	free_cmd(dirs);
+	free(cmd[0]);
+	cmd[0] = full;
+	if (access(full, X_OK) != 0)
+		return (-1);
+	return (1);
+}
+
+/**
  * direct_path - helper to shorten get_path
  * @cmd: input
  * Return: 0 if not found, -1 if found but no x, 1 if f and x
@@ -30,48 +47,38 @@ int direct_path(char **cmd)
 int get_path(char **cmd)
 {
 	char *env, *path, *full = NULL;
-	char **dirs;      /* PATH directories split by ':' */
+	char **dirs;
 	int i = 0;
 
 	if (!cmd || !cmd[0] || cmd[0][0] == '\0')
 		return (0);
 	if (cmd[0][0] == '/' || (cmd[0][0] == '.' && cmd[0][1] == '/'))
 		return (direct_path(cmd));
-	env = _getenv("PATH");	/* ("PATH=...") */
+	env = _getenv("PATH");
 	if (!env)
 		return (0);
-	path = _strdup(env + 5);	/* skip the 5 chars "PATH=" duplicate the rest */
+	path = _strdup(env + 5);
 	if (!path)
 		return (0);
-	dirs = strtow(path);	/* split PATH by ':' into directories */
+	dirs = strtow(path);
 	free(path);
 	if (!dirs)
 		return (0);
-	while (dirs[i])		/* try each directory with access() */
+	while (dirs[i])
 	{
-		full = _calloc(sizeof(char), _strlen(dirs[i]) + 1 + _strlen(cmd[0]) + 1);
+		full = _calloc(sizeof(char), _strlen(dirs[i]) + _strlen(cmd[0]) + 2);
 		if (!full)
 			break;
 		_strcat(full, dirs[i]);
 		_strcat(full, "/");
 		_strcat(full, cmd[0]);
-		if (access(full, F_OK) == 0) /* found an executable */
-		{
-			if (access(full, X_OK) == 0)
-				break;
-			free(cmd[0]);
-			cmd[0] = full;
-			free_cmd(dirs);
-			return (-1);
-		}
+
+		if (access(full, F_OK) == 0)
+			return (found_in_path(cmd, full, dirs));
 		free(full);
 		full = NULL;
 		i++;
 	}
 	free_cmd(dirs);
-	if (!full)
-		return (0);
-	free(cmd[0]);
-	cmd[0] = full;
-	return (1);
+	return (0);
 }
