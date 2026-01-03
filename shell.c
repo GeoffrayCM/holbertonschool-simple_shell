@@ -29,6 +29,7 @@ int main(int ac, char **av)
 	size_t b_size = 0;
 	int user = isatty(STDIN_FILENO), path_value;/* si 0 pas de terminal */
 	unsigned int line = 0;
+	int status = 0;
 
 	if (user)
 		_puts("$ ");
@@ -51,9 +52,20 @@ int main(int ac, char **av)
 		}
 		path_value = get_path(cmd);
 		if (path_value == 1)
+		{
 			execve_cmd(cmd, av[0], line);
+			status = 0;
+		}
+		else if (path_value == -1)
+		{
+			print_perm_denied(av[0], line, cmd[0]);
+			status = 126;
+		}
 		else
+		{
 			print_not_found(av[0], line, cmd[0]);
+			status = 127;
+		}
 		free_cmd(cmd);
 		if (user)
 			_puts("$ ");
@@ -61,5 +73,5 @@ int main(int ac, char **av)
 	if (user)
 		putchar('\n');
 	free(buffer); /*getline malloc auto */
-	return (0);
+	return (status);
 }
