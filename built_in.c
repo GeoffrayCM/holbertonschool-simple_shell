@@ -45,7 +45,7 @@ int env_builtin(char **cmd)
  */
 int exit_builtin(char **cmd)
 {
-	int status;
+/*	int status;*/
 
 	if (!cmd || !cmd[0])
 		return (0);
@@ -57,16 +57,16 @@ int exit_builtin(char **cmd)
 		exit(0);
 	}
 	/* cas d'erreurs: argument non-nombre/nombre negatif exit2 */
-	if (!_isnumber(cmd[1]) || cmd[1][0] == '-')
-	{
-		write(STDERR_FILENO, "exit: invalid status: ", 22);
-		write(STDERR_FILENO, cmd[1], _strlen(cmd[1]));
-		write(STDERR_FILENO, "\n", 1);
-		free_cmd(cmd);
-		exit(2);
-	}
-	status = _atoi(cmd[1]) % 256; /* 8bits unix like */
+/*	if (!_isnumber(cmd[1]) || cmd[1][0] == '-') */
+/*	{ */
+	/*	write(STDERR_FILENO, "exit: invalid status: ", 22);*/
+	/*	write(STDERR_FILENO, cmd[1], _strlen(cmd[1]));*/
+	/*	write(STDERR_FILENO, "\n", 1);*/
+	/*	free_cmd(cmd);*/
+	/*	exit(2);*/
+/*	}*/
+/*	status = _atoi(cmd[1]) % 256; 8bits unix like */
 	free_cmd(cmd);
-	exit(status);
-	return (1);
+/*	exit(status); */
+	return (0);
 }
