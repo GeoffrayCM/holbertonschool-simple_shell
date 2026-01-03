@@ -47,7 +47,7 @@ int env_builtin(char **cmd)
  */
 int exit_builtin(char **cmd, char *prog, unsigned int line)
 {
-	int status;
+	int status = 0;
 
 	if (!cmd || !cmd[0])
 		return (0);
@@ -56,7 +56,7 @@ int exit_builtin(char **cmd, char *prog, unsigned int line)
 	if (!cmd[1])
 	{
 		free_cmd(cmd);
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 	/*cas d'erreurs: argument non-nombre/nombre negatif exit2 */
 	if (!_isnumber(cmd[1]) || cmd[1][0] == '-')
