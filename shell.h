@@ -23,7 +23,7 @@ int _strncmp(char *s1, char *s2, unsigned int n);
 char *_getenv(char *name);
 char *_strdup(char *str);
 int get_path(char **cmd);
-void execve_cmd(char **cmd, char *prog, unsigned int line);
+int execve_cmd(char **cmd, char *prog, unsigned int line);
 void *_calloc(unsigned int nmemb, unsigned int size);
 char *_memset(char *s, char b, unsigned int n);
 void print_not_found(char *prog, unsigned int line, char *cmd);

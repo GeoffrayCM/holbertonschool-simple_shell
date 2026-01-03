@@ -11,7 +11,7 @@
  * Return: None
  **/
 
-void execve_cmd(char **cmd, char *prog, unsigned int line)
+int execve_cmd(char **cmd, char *prog, unsigned int line)
 {
 	pid_t pid;
 	int status;
@@ -20,16 +20,19 @@ void execve_cmd(char **cmd, char *prog, unsigned int line)
 	if (pid == -1)
 	{
 		perror("fork");
-		return;
+		return (1);
 	}
 	if (pid == 0)
 	{
 		execve(cmd[0], cmd, environ);
-		if (errno == ENOENT)
-			print_not_found(prog, line, cmd[0]);
-		else
-			perror(cmd[0]);
+		if (errno == EACCES || errno == EISDIR)
+		{
+			print_perm_denied(prog, line, cmd[0]);
+			exit(126);
+		}
+		print_not_found(prog, line, cmd[0]);
 		exit(127);
 	}
 	waitpid(pid, &status, 0);
+	return (status >> 8);
 }

@@ -52,7 +52,14 @@ int get_path(char **cmd)
 		_strcat(full, "/");
 		_strcat(full, cmd[0]);
 		if (access(full, F_OK) == 0) /* found an executable */
-			break;
+		{
+			if (access(full, X_OK) == 0)
+				break;
+			free(cmd[0]);
+			cmd[0] = full;
+			free_cmd(dirs);
+			return (-1);
+		}
 		free(full);
 		full = NULL;
 		i++;
