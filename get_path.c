@@ -60,7 +60,7 @@ int get_path(char **cmd)
 	path = _strdup(env + 5);
 	if (!path)
 		return (0);
-	dirs = strtow(path);
+	dirs = strtowp(path);
 	free(path);
 	if (!dirs)
 		return (0);
