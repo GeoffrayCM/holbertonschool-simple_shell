@@ -25,14 +25,21 @@ int execve_cmd(char **cmd, char *prog, unsigned int line)
 	if (pid == 0)
 	{
 		execve(cmd[0], cmd, environ);
-		if (errno == EACCES || errno == EISDIR)
+		if (errno == EACCES)
 		{
 			print_perm_denied(prog, line, cmd[0]);
+			exit(126);
+		}
+		if (errno == EISDIR)
+		{
+			print_is_dir(prog, line, cmd[0]);
 			exit(126);
 		}
 		print_not_found(prog, line, cmd[0]);
 		exit(127);
 	}
 	waitpid(pid, &status, 0);
-	return (status >> 8);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (1);
 }

@@ -28,6 +28,7 @@ void *_calloc(unsigned int nmemb, unsigned int size);
 char *_memset(char *s, char b, unsigned int n);
 void print_not_found(char *prog, unsigned int line, char *cmd);
 void print_perm_denied(char *prog, unsigned int line, char *cmd);
+void print_is_dir(char *prog, unsigned int line, char *cmd);
 int direct_path(char **cmd);
 /* builtin */
 int env_builtin(char **cmd);

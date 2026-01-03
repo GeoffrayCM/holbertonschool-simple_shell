@@ -29,7 +29,7 @@ int main(int ac, char **av)
 	size_t b_size = 0;
 	int user = isatty(STDIN_FILENO), path_value;/* si 0 pas de terminal */
 	unsigned int line = 0;
-	int status = 0;
+	int status = 0; /* exit status en cas d'erreurs */
 
 	if (user)
 		_puts("$ ");
@@ -53,6 +53,11 @@ int main(int ac, char **av)
 		path_value = get_path(cmd);
 		if (path_value == 1)
 			status = execve_cmd(cmd, av[0], line);
+		else if (path_value == -2)
+		{
+			print_is_dir(av[0], line, cmd[0]);
+			status = 126;
+		}
 		else if (path_value == -1)
 		{
 			print_perm_denied(av[0], line, cmd[0]);

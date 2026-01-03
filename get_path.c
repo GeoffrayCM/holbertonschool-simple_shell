@@ -7,6 +7,10 @@
  */
 int direct_path(char **cmd)
 {
+	struct stat st;
+
+	if (stat(cmd[0], &st) == 0 && S_ISDIR(st.st_mode)) /* if directory */
+		return (-2);
 	if (access(cmd[0], F_OK) != 0)
 		return (0);
 	if (access(cmd[0], X_OK) != 0)
