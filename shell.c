@@ -52,8 +52,8 @@ int main(int ac, char **av)
 		path_value = get_path(cmd);
 		if (path_value == 1)
 			execve_cmd(cmd, av[0], line);
-		else if (path_value == -1)
-			print_perm_denied(av[0], line, cmd[0]);
+	/*	else if (path_value == -1) */
+		/*	print_perm_denied(av[0], line, cmd[0]); */
 		else
 			print_not_found(av[0], line, cmd[0]);
 		free_cmd(cmd);

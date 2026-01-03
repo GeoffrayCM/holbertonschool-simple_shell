@@ -9,8 +9,8 @@ int direct_path(char **cmd)
 {
 	if (access(cmd[0], F_OK) != 0)
 		return (0);
-	if (access(cmd[0], X_OK) != 0)
-		return (-1);
+	/*if (access(cmd[0], X_OK) != 0)*/
+	/*	return (-1);*/
 	return (1);
 }
 
@@ -51,7 +51,7 @@ int get_path(char **cmd)
 		_strcat(full, dirs[i]);
 		_strcat(full, "/");
 		_strcat(full, cmd[0]);
-		if (access(full, X_OK) == 0) /* found an executable */
+		if (access(full, F_OK) == 0) /* found an executable */
 			break;
 		free(full);
 		full = NULL;
