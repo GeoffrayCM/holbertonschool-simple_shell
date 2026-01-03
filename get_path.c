@@ -9,6 +9,8 @@ int direct_path(char **cmd)
 {
 	if (access(cmd[0], F_OK) != 0)
 		return (0);
+	if (access(cmd[0], X_OK) != 0)
+		return (-1);
 	return (1);
 }
 
