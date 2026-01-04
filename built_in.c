@@ -59,9 +59,15 @@ int exit_builtin(char **cmd, char *prog, unsigned int line)
 		exit(status);
 	}
 	/*cas d'erreurs: argument non-nombre/nombre negatif exit2 */
-	if (!_isnumber(cmd[1]) || cmd[2])
+	if (!_isnumber(cmd[1]))
 	{
 		print_exit_illegal(prog, line, cmd[1]);
+		free_cmd(cmd);
+		exit(2);
+	}
+	if (cmd[1] != NULL && cmd[2] != NULL)
+	{
+		print_exit_too_many(prog, line);
 		free_cmd(cmd);
 		exit(2);
 	}

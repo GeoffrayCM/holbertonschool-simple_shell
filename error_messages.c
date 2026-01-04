@@ -82,3 +82,21 @@ void print_exit_illegal(char *prog, unsigned int line, char *arg)
 	write(STDERR_FILENO, arg, _strlen(arg));
 	write(STDERR_FILENO, "\n", 1);
 }
+
+/**
+ * print_exit_too_many - print error with same output as sh
+ * @prog: program name av[0]
+ * @line: line number
+ * Return: void
+ */
+void print_exit_too_many(char *prog, unsigned int line)
+{
+	char buf[32];
+	int len;
+
+	write(STDERR_FILENO, prog, _strlen(prog));
+	write(STDERR_FILENO, ": ", 2);
+	len = sprintf(buf, "%u", line);
+	write(STDERR_FILENO, buf, len);
+	write(STDERR_FILENO, ": exit: too many arguments\n", 27);
+}

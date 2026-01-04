@@ -30,6 +30,7 @@ void print_not_found(char *prog, unsigned int line, char *cmd);
 void print_perm_denied(char *prog, unsigned int line, char *cmd);
 void print_is_dir(char *prog, unsigned int line, char *cmd);
 void print_exit_illegal(char *prog, unsigned int line, char *arg);
+void print_exit_too_many(char *prog, unsigned int line);
 int direct_path(char **cmd);
 /* builtin */
 int env_builtin(char **cmd);
