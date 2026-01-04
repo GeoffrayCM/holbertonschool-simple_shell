@@ -56,16 +56,18 @@ int exit_builtin(char **cmd, char *prog, unsigned int line)
 	if (!cmd[1])
 	{
 		free_cmd(cmd);
-		exit(EXIT_SUCCESS);
+		exit(status);
 	}
 	/*cas d'erreurs: argument non-nombre/nombre negatif exit2 */
-	if (!_isnumber(cmd[1]) || cmd[1][0] == '-')
+	if (!_isnumber(cmd[1]) || cmd[2])
 	{
 		print_exit_illegal(prog, line, cmd[1]);
 		free_cmd(cmd);
 		exit(2);
 	}
 	status = _atoi(cmd[1]) % 256; /*8bits unix like*/
+	if (status < 0)
+		status += 256;
 	free_cmd(cmd);
 	exit(status);
 	return (0);
