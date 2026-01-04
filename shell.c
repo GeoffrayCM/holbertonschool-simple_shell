@@ -21,8 +21,11 @@ void ctrlC(int signal)
  */
 static int handle_cmd(char **cmd, char **av, unsigned int line)
 {
-	int path_value;
+	int path_value, x;
 
+	x = exit_builtin(cmd, av[0], line);
+	if (x == 2)
+		return (2);
 	if (env_builtin(cmd) || exit_builtin(cmd, av[0], line))
 		return (0);
 
