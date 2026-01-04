@@ -68,7 +68,7 @@ int exit_builtin(char **cmd, char *prog, unsigned int line)
 	if (cmd[1] != NULL && cmd[2] != NULL)
 	{
 		print_exit_too_many(prog, line);
-		exit(2);
+		return (1);
 	}
 	status = _atoi(cmd[1]) % 256; /*8bits unix like*/
 	if (status < 0)
