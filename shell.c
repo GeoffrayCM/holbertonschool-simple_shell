@@ -64,6 +64,12 @@ int main(int ac, char **av)
 	while (getline(&buffer, &b_size, stdin) != -1 && ++line)
 	{
 		cmd = strtow(buffer);
+		if (cmd && cmd[0] && _strcmp(cmd[0], "exit") == 0 && !cmd[1])
+		{
+			free_cmd(cmd);
+			free(buffer);
+			exit(status);
+		}
 		if (cmd)
 		{
 			status = handle_cmd(cmd, av, line);
