@@ -40,6 +40,6 @@ int execve_cmd(char **cmd, char *prog, unsigned int line)
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
+		return (WEXITSTATUS(status)); /*return child process exit code */
 	return (1);
 }

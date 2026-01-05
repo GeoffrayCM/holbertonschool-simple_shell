@@ -52,7 +52,9 @@ int get_path(char **cmd)
 
 	if (!cmd || !cmd[0] || cmd[0][0] == '\0')
 		return (0);
-	if (cmd[0][0] == '/' || (cmd[0][0] == '.' && cmd[0][1] == '/'))
+	if (cmd[0][0] == '/' || (cmd[0][0] == '.' && cmd[0][1] == '/')
+			|| (cmd[0][0] == '.' && cmd[0][1] == '.' &&
+				cmd[0][2] == '/'))
 		return (direct_path(cmd));
 	env = _getenv("PATH");
 	if (!env)
