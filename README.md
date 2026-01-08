@@ -94,3 +94,4 @@ env
 - extern char **environ
 
 ---
+![Flowchart](./flowchart.png)
